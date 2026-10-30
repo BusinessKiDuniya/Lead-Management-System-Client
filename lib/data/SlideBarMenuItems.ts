@@ -1,4 +1,4 @@
-import { CheckSquare, LayoutDashboard, Phone, Users, Megaphone } from "lucide-react";
+import { LayoutDashboard, Phone, Users, Megaphone } from "lucide-react";
 
 export const SlideBarMenuItems = [
   {
@@ -18,7 +18,6 @@ export const SlideBarMenuItems = [
     title: "Leads",
     id: "leads-tab",
     icon: Users,
-    defaultOpen: true,
     items: [
       {
         title: "Add Leads",
@@ -50,32 +49,9 @@ export const SlideBarMenuItems = [
     ],
   },
   {
-    title: "Tasks",
-    id: "tasks-tab",
-    icon: CheckSquare,
-    items: [
-      {
-        title: "My Tasks",
-        id: "my-tasks-tab",
-        href: "/tasks/all",
-      },
-      {
-        title: "Pending Tasks",
-        id: "pending-tasks-tab",
-        href: "/tasks/pending",
-      },
-      {
-        title: "Completed Tasks",
-        id: "completed-tasks-tab",
-        href: "/tasks/completed",
-      },
-    ],
-  },
-  {
     title: "Team Management",
     id: "team-management-tab",
     icon: Users,
-    defaultOpen: true,
     items: [
       {
         title: "Team Members",
@@ -93,7 +69,6 @@ export const SlideBarMenuItems = [
     title: "Outreach",
     id: "outreach-tab",
     icon: Megaphone,
-    defaultOpen: true,
     items: [
       {
         title: "Broadcast",

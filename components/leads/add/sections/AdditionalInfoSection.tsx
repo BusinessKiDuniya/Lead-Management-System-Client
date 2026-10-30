@@ -1,6 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { LeadFormData } from "@/lib/types/lead";
+import CollapsibleSection from "./CollapsibleSection";
 
 interface AdditionalInfoProps {
   formData: LeadFormData;
@@ -9,10 +10,7 @@ interface AdditionalInfoProps {
 
 export default function AdditionalInfoSection({ formData, onChange }: AdditionalInfoProps) {
   return (
-    <div className="p-6 border border-border rounded-xl bg-background/50 space-y-6">
-      <h3 className="text-md font-semibold tracking-wide uppercase text-muted-foreground/80 border-b border-border pb-2">
-        Additional Information
-      </h3>
+    <CollapsibleSection title="Additional Information" defaultOpen={false}>
       <div className="grid gap-6 md:grid-cols-2">
         <div className="space-y-2">
           <Label htmlFor="requirements" className="text-sm font-medium">Project Requirements</Label>
@@ -40,6 +38,6 @@ export default function AdditionalInfoSection({ formData, onChange }: Additional
           />
         </div>
       </div>
-    </div>
+    </CollapsibleSection>
   );
 }

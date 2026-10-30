@@ -113,6 +113,37 @@ export default function AddLeadForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!formData.fullName?.trim()) {
+      setModalState({
+        isOpen: true,
+        type: "error",
+        title: "Validation Error",
+        description: "Please enter the Contact Name.",
+      });
+      return;
+    }
+
+    if (!formData.source) {
+      setModalState({
+        isOpen: true,
+        type: "error",
+        title: "Validation Error",
+        description: "Please select a Lead Source under the Lead Information section.",
+      });
+      return;
+    }
+
+    if (!formData.status) {
+      setModalState({
+        isOpen: true,
+        type: "error",
+        title: "Validation Error",
+        description: "Please select a Lead Status under the Lead Information section.",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {

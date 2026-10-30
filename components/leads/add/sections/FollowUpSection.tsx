@@ -8,6 +8,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { LeadFormData } from "@/lib/types/lead";
+import { TimePicker } from "@/components/ui/time-picker";
+import CollapsibleSection from "./CollapsibleSection";
 
 interface FollowUpProps {
   formData: LeadFormData;
@@ -17,10 +19,7 @@ interface FollowUpProps {
 
 export default function FollowUpSection({ formData, onChange, onSelectChange }: FollowUpProps) {
   return (
-    <div className="p-6 border border-border rounded-xl bg-background/50 space-y-6">
-      <h3 className="text-md font-semibold tracking-wide uppercase text-muted-foreground/80 border-b border-border pb-2">
-        Follow Up Information
-      </h3>
+    <CollapsibleSection title="Follow Up Information" defaultOpen={false}>
       <div className="grid gap-x-6 gap-y-4 md:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-2">
           <Label htmlFor="followUpDate" className="text-sm font-medium">Follow Up Date</Label>
@@ -30,19 +29,19 @@ export default function FollowUpSection({ formData, onChange, onSelectChange }: 
             name="followUpDate"
             value={formData.followUpDate}
             onChange={onChange}
-            className="h-10 bg-card border-input focus-visible:ring-1 cursor-pointer"
+            onClick={(e) => e.currentTarget.showPicker?.()}
+            className="h-10 bg-card border-input focus-visible:ring-1 cursor-pointer w-full"
           />
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="followUpTime" className="text-sm font-medium">Follow Up Time</Label>
-          <Input
+          <TimePicker
             id="followUpTime"
-            type="time"
             name="followUpTime"
             value={formData.followUpTime}
-            onChange={onChange}
-            className="h-10 bg-card border-input focus-visible:ring-1 cursor-pointer"
+            onChange={(val) => onSelectChange("followUpTime", val)}
+            placeholder="Select time"
           />
         </div>
 
@@ -65,7 +64,7 @@ export default function FollowUpSection({ formData, onChange, onSelectChange }: 
         <div className="space-y-2">
           <Label className="text-sm font-medium">Contact Method</Label>
           <Select onValueChange={(v) => onSelectChange("contactMethod", v)} value={formData.contactMethod}>
-          <SelectTrigger id="contactMethod" className="h-10 bg-card border-input">
+            <SelectTrigger id="contactMethod" className="h-10 bg-card border-input">
               <SelectValue placeholder="Contact Method" />
             </SelectTrigger>
             <SelectContent position="popper" sideOffset={4} className="w-[--radix-select-trigger-width]">
@@ -77,6 +76,6 @@ export default function FollowUpSection({ formData, onChange, onSelectChange }: 
           </Select>
         </div>
       </div>
-    </div>
+    </CollapsibleSection>
   );
 }

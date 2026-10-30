@@ -14,6 +14,7 @@ import { membersApi } from "@/lib/api/team";
 import { Member } from "@/lib/types/team";
 import { useLeads } from "@/hooks/use-leads";
 import { formatLabel } from "@/lib/lead-insights";
+import CollapsibleSection from "./CollapsibleSection";
 
 interface LeadInfoProps {
   formData: LeadFormData;
@@ -111,10 +112,7 @@ export default function LeadInfoSection({
   }, [dbSources]);
 
   return (
-    <div className="p-6 border border-border rounded-xl bg-background/50 space-y-6">
-      <h3 className="text-md font-semibold tracking-wide uppercase text-muted-foreground/80 border-b border-border pb-2">
-        Lead Information
-      </h3>
+    <CollapsibleSection title="Lead Information" defaultOpen={false}>
       <div className="grid gap-x-6 gap-y-4 md:grid-cols-2 lg:grid-cols-3">
         <div className="space-y-2">
           <Label className="text-sm font-medium">Lead Type</Label>
@@ -227,13 +225,7 @@ export default function LeadInfoSection({
               ))}
             </SelectContent>
           </Select>
-          <input
-            tabIndex={-1}
-            required
-            value={formData.source}
-            onChange={() => {}}
-            className="absolute inset-x-0 bottom-0 h-0 w-full opacity-0 pointer-events-none"
-          />
+          
         </div>
 
         {/* Required Field with Validation Anchor */}
@@ -259,13 +251,7 @@ export default function LeadInfoSection({
               <SelectItem value="unqualified">Unqualified</SelectItem>
             </SelectContent>
           </Select>
-          <input
-            tabIndex={-1}
-            required
-            value={formData.status}
-            onChange={() => {}}
-            className="absolute inset-x-0 bottom-0 h-0 w-full opacity-0 pointer-events-none"
-          />
+          
         </div>
 
         <div className="space-y-2">
@@ -295,6 +281,6 @@ export default function LeadInfoSection({
           </Select>
         </div>
       </div>
-    </div>
+    </CollapsibleSection>
   );
 }

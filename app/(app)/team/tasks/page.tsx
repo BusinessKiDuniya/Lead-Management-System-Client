@@ -262,7 +262,10 @@ export default function TeamTasksPage() {
         status,
         dueDate,
       });
-      setTasks((prev) => [newTask, ...prev]);
+      setTasks((prev) => {
+        if (prev.some((t) => t._id === newTask._id)) return prev;
+        return [newTask, ...prev];
+      });
       setIsAddOpen(false);
     } catch (err) {
       alert(err instanceof Error ? err.message : "Failed to create task");

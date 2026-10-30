@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LeadFormData } from "@/lib/types/lead";
+import CollapsibleSection from "./CollapsibleSection";
 
 interface PersonalInfoProps {
   formData: LeadFormData;
@@ -12,12 +13,9 @@ export default function PersonalInfoSection({
   onChange,
 }: PersonalInfoProps) {
   return (
-    <div className="p-6 border border-border rounded-xl bg-background/50 space-y-8">
-      {/* Core Personal Info */}
-      <div className="space-y-6">
-        <h3 className="text-md font-semibold tracking-wide uppercase text-muted-foreground/80 border-b border-border pb-2">
-          Personal Information
-        </h3>
+    <>
+      {/* 1. Core Personal Info - Open by default */}
+      <CollapsibleSection title="Personal Information" defaultOpen={true}>
         <div className="grid gap-x-6 gap-y-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="fullName" className="text-sm font-medium">
@@ -86,7 +84,6 @@ export default function PersonalInfoSection({
           </div>
 
           <div className="space-y-2">
-            {/* Warning: Parent onChange must handle splitting this string into an array */}
             <Label htmlFor="emails" className="text-sm font-medium">
               Emails (Comma separated)
             </Label>
@@ -127,13 +124,10 @@ export default function PersonalInfoSection({
             />
           </div>
         </div>
-      </div>
+      </CollapsibleSection>
 
-      {/* Scraped Directory Links */}
-      <div className="space-y-6">
-        <h3 className="text-md font-semibold tracking-wide uppercase text-muted-foreground/80 border-b border-border pb-2">
-          Directory & Social Links
-        </h3>
+      {/* 2. Directory & Social Links - Closed by default */}
+      <CollapsibleSection title="Directory & Social Links" defaultOpen={false}>
         <div className="grid gap-x-6 gap-y-4 md:grid-cols-2">
           <div className="space-y-2">
             <Label htmlFor="website" className="text-sm font-medium">
@@ -213,7 +207,7 @@ export default function PersonalInfoSection({
             />
           </div>
         </div>
-      </div>
-    </div>
+      </CollapsibleSection>
+    </>
   );
 }

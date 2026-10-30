@@ -44,6 +44,11 @@ import { Member, TeamTask } from "@/lib/types/team";
 import { membersApi, teamTasksApi } from "@/lib/api/team";
 import { useRealtimeSubscription } from "@/components/providers/RealtimeProvider";
 
+const ROLE_OPTIONS = [
+  "Admin",
+  "Member",
+];
+
 export default function MembersPage() {
   const [members, setMembers] = useState<Member[]>([]);
   const [tasks, setTasks] = useState<TeamTask[]>([]);
@@ -146,7 +151,10 @@ export default function MembersPage() {
     setIsSubmitting(true);
     try {
       const newMember = await membersApi.create({ name, email, role, status });
-      setMembers((prev) => [newMember, ...prev]);
+      setMembers((prev) => {
+        if (prev.some((m) => m._id === newMember._id)) return prev;
+        return [newMember, ...prev];
+      });
       setIsAddOpen(false);
     } catch (err) {
       alert(err instanceof Error ? err.message : "Failed to add member");
@@ -415,13 +423,21 @@ export default function MembersPage() {
                 <Label htmlFor="role" className="text-sm font-semibold">
                   Role
                 </Label>
-                <Input
-                  id="role"
+                <Select
                   value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  placeholder="e.g. Senior Analyst, Representative"
-                  className="bg-muted/10 border-input h-10"
-                />
+                  onValueChange={(val) => setRole(val)}
+                >
+                  <SelectTrigger id="role" className="h-10 bg-muted/10 border-input">
+                    <SelectValue placeholder="Select role" />
+                  </SelectTrigger>
+                  <SelectContent position="popper">
+                    {ROLE_OPTIONS.map((r) => (
+                      <SelectItem key={r} value={r}>
+                        {r}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div className="space-y-1">
                 <Label htmlFor="status" className="text-sm font-semibold">
@@ -504,12 +520,24 @@ export default function MembersPage() {
                 <Label htmlFor="edit-role" className="text-sm font-semibold">
                   Role
                 </Label>
-                <Input
-                  id="edit-role"
+                <Select
                   value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  className="bg-muted/10 border-input h-10"
-                />
+                  onValueChange={(val) => setRole(val)}
+                >
+                  <SelectTrigger id="edit-role" className="h-10 bg-muted/10 border-input">
+                    <SelectValue placeholder="Select role" />
+                  </SelectTrigger>
+                  <SelectContent position="popper">
+                    {role && !ROLE_OPTIONS.includes(role) && (
+                      <SelectItem value={role}>{role}</SelectItem>
+                    )}
+                    {ROLE_OPTIONS.map((r) => (
+                      <SelectItem key={r} value={r}>
+                        {r}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div className="space-y-1">
                 <Label htmlFor="edit-status" className="text-sm font-semibold">
